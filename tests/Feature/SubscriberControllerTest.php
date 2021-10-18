@@ -34,13 +34,18 @@ class SubscriberControllerTest extends TestCase
         $website = Website::factory()->create();
         $subscriber = Subscriber::factory()->create();
 
-        $this->post(route('subscribe.to.website', $website->id), [
+        $response = $this->post(route('subscribe.to.website', $website->id), [
                 'subscriber' => $subscriber->id,
         ]);
 
-        dd(Subscriptions::all());
+        $response->assertJsonStructure([
+                'id',
+                'website_id',
+                'subscriber_id'
+        ]);
 
     }
+
     /** @test * */
     public function it_cant_subscribe_to_a_website_that_is_already_subscribed()
     {
@@ -48,15 +53,18 @@ class SubscriberControllerTest extends TestCase
         $subscriber = Subscriber::factory()->create();
 
         Subscriptions::factory()->create([
-                'website_id' => $website->id,
+                'website_id'    => $website->id,
                 'subscriber_id' => $subscriber->id,
         ]);
 
-       $response = $this->post(route('subscribe.to.website', $website->id), [
+        $response = $this->post(route('subscribe.to.website', $website->id), [
                 'subscriber' => $subscriber->id,
         ]);
 
-        dd($response->content());
+
+        $response->assertJson([
+                'is_subscribed' => ['This user is already subscribed to this website.']
+        ]);
 
     }
 }

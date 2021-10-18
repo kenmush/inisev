@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewPostEvent;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -35,7 +36,9 @@ class PostController extends Controller
         $post->website_id = $request->website_id;
         $post->saveOrFail();
 
-        return response()->json(new PostResource($post),201);
+        NewPostEvent::dispatch($post);
+
+        return response()->json(new PostResource($post), 201);
     }
 
 

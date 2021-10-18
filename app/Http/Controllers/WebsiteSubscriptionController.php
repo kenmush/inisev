@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SubscriberResource;
+use App\Http\Resources\SubscriptionsResource;
 use App\Models\Subscriptions;
 use App\Models\Website;
 use Illuminate\Http\Request;
@@ -42,6 +43,6 @@ class WebsiteSubscriptionController extends Controller
         $subscriptions->subscriber_id = $request->subscriber;
         $subscriptions->save();
 
-        return response()->json(new SubscriberResource($subscriptions));
+        return response()->json(new SubscriptionsResource($subscriptions));
     }
 }

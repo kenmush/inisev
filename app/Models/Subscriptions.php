@@ -11,4 +11,8 @@ class Subscriptions extends Model
 
     protected $fillable = ['*'];
 
+    public function subscriber()
+    {
+        return $this->belongsTo(Subscriber::class);
+    }
 }
