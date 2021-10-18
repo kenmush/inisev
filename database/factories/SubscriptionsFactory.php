@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Subscriber;
+use App\Models\Subscriptions;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SubscriberFactory extends Factory
+class SubscriptionsFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Subscriber::class;
+    protected $model = Subscriptions::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,7 @@ class SubscriberFactory extends Factory
     public function definition()
     {
         return [
-            'email' => $this->faker->email
+            //
         ];
     }
 }

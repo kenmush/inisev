@@ -14,4 +14,9 @@ class Website extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public function subscribe()
+    {
+        return $this->hasOne(Subscriptions::class);
+    }
 }
