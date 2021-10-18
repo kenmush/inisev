@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\NewPostEvent;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Cache;
 use Illuminate\Http\Request;
 use function response;
 
@@ -13,7 +14,11 @@ class PostController extends Controller
 
     public function index()
     {
-        //
+       $posts = Cache::remember('posts', 60 * 60 * 60, function () {
+            return PostResource::collection(Post::all());
+        });
+
+        return response()->json($posts);
     }
 
 
